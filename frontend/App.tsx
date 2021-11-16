@@ -1,12 +1,17 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import MovieItem from './components/MovieItem';
-import ModalTester from './components/Item';
 
 export default function App() {
   return (
+    <ScrollView 
+    directionalLockEnabled={true} 
+  >
       <MovieItem/>
+      <MovieItem/>
+      <MovieItem/>
+      </ScrollView>
+
   );
 }
 

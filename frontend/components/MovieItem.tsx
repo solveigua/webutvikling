@@ -133,6 +133,8 @@ const MovieItem: React.FC<{key:string, _id:string, title:string, seqNr:number, r
   );
 };
 
+//---- styling -----//
+
 const styles = StyleSheet.create({
     centeredView: {
       flex: 1,
