@@ -53,7 +53,7 @@ export default function Sortbar() {
 
 const styles = StyleSheet.create({
   sortbar: {
-    height: "28%",
+    height: "40%",
     backgroundColor: "#000000",
     textAlign: "center",
     //maxWidth: "45rem",

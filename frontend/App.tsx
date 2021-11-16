@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, SafeAreaView, Image, View } from "react-native";
 import Header from "./components/Header";
+import MovieItem from "./components/MovieItem";
 import Sortbar from "./components/Sortbar";
 
 export default function App() {
