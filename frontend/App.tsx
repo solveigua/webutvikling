@@ -1,21 +1,32 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { StyleSheet, SafeAreaView, Image, View } from "react-native";
+import Header from "./components/Header";
+import Sortbar from "./components/Sortbar";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <Header />
+      <Image
+        source={require("./assets/marvel_pictures/marvel.png")}
+        style={styles.image}
+      ></Image>
+      <Sortbar />
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#ED1D24",
+    alignItems: "center",
+  },
+  image: {
+    width: "100%",
+    height: 190,
+    zIndex: 0,
+    overflow: "hidden",
+    transform: [{ rotate: "-5deg" }],
   },
 });
