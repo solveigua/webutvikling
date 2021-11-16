@@ -26,7 +26,7 @@ import Spiderman2 from './marvel_pictures/spiderman.jpg';*/
 //importing from marvel_pictures and making list to map pictures to movie by seqNr
 
 export const coverMovies = [
-    {seqNr: 1, picture: './marvel_pictures/Cap_first.jpg'}, //for å bruke require
+    {seqNr: 1, picture: '../assets/marvel_pictures/Cap_first.jpg'}, //for å bruke require
     /*{seqNr: 2, picture: CapMarvel},
     {seqNr: 3, picture: Ironman},
     {seqNr: 4, picture: Ironman2},
