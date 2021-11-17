@@ -2,8 +2,9 @@
  * Exports all resolvers
  */
 
-const models = require("./models/movie")
-const ObjectId = require("mongoose")
+import {Movie} from './models/movie'
+import {Character } from './models/character'
+import mongoose from 'mongoose'
 
 /*interface IMovie {
     id: String;
@@ -33,19 +34,19 @@ export const resolvers = {
             return "hello world";
         },
         getAllMovies: async () => {
-            const movies = await models.Movie.find();
+            const movies = await Movie.find();
             console.log(movies);
             return movies;
         },
 
         getAllCharacters: async () => {
-            const characters = await models.Character.find();
+            const characters = await Character.find();
             return characters;
         },
-        getMovie: async (_, args) => {
+        getMovie: async (_: any, args: any) => {
             console.log(args.input.id);
             try {
-                const movie = await models.Movie.findById(args.input.id);
+                const movie = await Movie.findById(args.input.id);
                 return movie;
              }
              catch (err) {
@@ -53,10 +54,10 @@ export const resolvers = {
              }
         },
 
-        getCharacter: async (_, args) => {
+        getCharacter: async (_: any, args: any) => {
             console.log(args.input.id);
             try {
-                const character = await models.Character.findById(args.input.id);
+                const character = await Character.findById(args.input.id);
                 return character;
              }
              catch (err) {
@@ -66,13 +67,13 @@ export const resolvers = {
 
     },
     Mutation: {
-        setRating: async (_, args) => {
+        setRating: async (_: any, args: any) => {
             console.log(args.input);
             try {
-                const movie = await models.Movie.findById(args.input.movieId);
+                const movie = await Movie.findById(args.input.movieId);
                 console.log(JSON.parse(JSON.stringify(movie)));
                 if (movie) {
-                    await models.Movie.updateOne( movie ,{ $set: { rating: args.input.rating }});
+                    await Movie.updateOne( movie ,{ $set: { rating: args.input.rating }});
                     return movie;
                 }
                 else{
@@ -84,4 +85,5 @@ export const resolvers = {
             }
         }
     }
+
 };

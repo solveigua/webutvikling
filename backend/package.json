@@ -2,10 +2,11 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.ts",
+  "main": "server.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.ts",
+    "dev:nodemon": "nodemon server.ts",
+    "dev": "ts-node-dev --respawn server.ts",
     "build": "tsc --build"
   },
   "keywords": [],
@@ -16,6 +17,7 @@
     "express": "^4.17.1",
     "graphql": "^15.6.1",
     "mongoose": "^6.0.12",
+    "ts-node-dev": "^1.1.8",
     "typescript": "^4.4.4"
   },
   "devDependencies": {

@@ -12,7 +12,7 @@ export interface movieList {
     movies: movie[]
 }
 
-export const typeDefs = gql`
+const typeDefs = gql`
 type Movie {
     _id: ID!
     title: String
@@ -36,7 +36,6 @@ type Query {
 
     getAllCharacters: [Character]
     getCharacter(input: characterId): Character
-    getMoviesFromCharacter: [String]
 }
 
 type Mutation {
@@ -55,3 +54,4 @@ input ratingInput {
 }
 `;
 
+export default typeDefs
