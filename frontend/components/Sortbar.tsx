@@ -1,30 +1,44 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, Button, Alert, TextInput } from "react-native";
-import { useDispatch } from "react-redux";
-import { searchMovie } from "../actions/searchActions";
+import { useDispatch, useSelector } from "react-redux";
+import { searchMovie, sortMovies } from "../actions/searchActions";
 
 export default function Sortbar() {
   const [search, setSearch] = useState("");
 
-  const updateSearch = (search: string) => {
-    setSearch(search);
-  };
-
   const dispatch = useDispatch();
 
+  const updateSearch = (search: string) => {
+    setSearch(search);
+    dispatch(searchMovie(search));
+  };
+
+  const allMovies: any = useSelector<any, any>((state) => state.movies.movies);
+
   const releaseYearPress = () => {
+    dispatch(sortMovies("year"));
     Alert.alert("Release Year", "Sorting movies based on release year");
   };
 
   const chronologicalPress = () => {
+    dispatch(sortMovies("chronological"));
     Alert.alert(
       "Chronological Order",
       "Sorting movies based on chronological order"
     );
   };
 
+  const searchText: string = useSelector<any, any>(
+    (state) => state.movies.text
+  );
+
   const submitPress = () => {
-    dispatch(searchMovie(search));
+    // Trenger vi noe her?
+    console.log(searchText);
+  };
+
+  const allMoviesPress = () => {
+    // Gjør noe med allMovies her
   };
 
   return (
