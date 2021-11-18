@@ -4,7 +4,7 @@
 
 import { Movie } from "./models/movie";
 import { Character } from "./models/character";
-import mongoose from "mongoose";
+//import mongoose from "mongoose";
 
 //TODO: remove unused interfaces
 
