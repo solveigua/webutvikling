@@ -78,8 +78,8 @@ export const resolvers = {
           if (args.input.limit && endResult.length === args.input.limit) {
             break;
           }
-          return endResult;
         }
+        return endResult;
       } catch (err) {
         throw err;
       }
