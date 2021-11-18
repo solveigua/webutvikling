@@ -3,17 +3,21 @@ import { StyleSheet, SafeAreaView, Image, View } from "react-native";
 import Header from "./components/Header";
 import MovieItem from "./components/MovieItem";
 import Sortbar from "./components/Sortbar";
+import store from "./store";
+import { Provider } from "react-redux";
 
 export default function App() {
   return (
-    <SafeAreaView style={styles.container}>
-      <Header />
-      <Image
-        source={require("./assets/marvel_pictures/marvel.png")}
-        style={styles.image}
-      ></Image>
-      <Sortbar />
-    </SafeAreaView>
+    <Provider store={store}>
+      <SafeAreaView style={styles.container}>
+        <Header />
+        <Image
+          source={require("./assets/marvel_pictures/marvel.png")}
+          style={styles.image}
+        ></Image>
+        <Sortbar />
+      </SafeAreaView>
+    </Provider>
   );
 }
 

@@ -1,7 +1,32 @@
-import React from "react";
-import { StyleSheet, Text, View, Button, Alert } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, Text, View, Button, Alert, TextInput } from "react-native";
+import { useDispatch } from "react-redux";
+import { searchMovie } from "../actions/searchActions";
 
 export default function Sortbar() {
+  const [search, setSearch] = useState("");
+
+  const updateSearch = (search: string) => {
+    setSearch(search);
+  };
+
+  const dispatch = useDispatch();
+
+  const releaseYearPress = () => {
+    Alert.alert("Release Year", "Sorting movies based on release year");
+  };
+
+  const chronologicalPress = () => {
+    Alert.alert(
+      "Chronological Order",
+      "Sorting movies based on chronological order"
+    );
+  };
+
+  const submitPress = () => {
+    dispatch(searchMovie(search));
+  };
+
   return (
     <View style={styles.sortbar}>
       <Text style={styles.titleText}>Marvel Cinematic Universe</Text>
@@ -14,33 +39,23 @@ export default function Sortbar() {
         <Button
           color="#fff"
           title="Release Year"
-          onPress={() =>
-            Alert.alert("Release Year", "Sorting movies based on release year")
-          }
+          onPress={releaseYearPress}
         ></Button>
         <Button
           color="#fff"
           title="Chronological Order"
-          onPress={() =>
-            Alert.alert(
-              "Chronological Order",
-              "Sorting movies based on chronological order"
-            )
-          }
+          onPress={chronologicalPress}
         ></Button>
       </View>
       <Text style={styles.paragraphTextBold}> Movie options: </Text>
       <View style={styles.buttonsView}>
-        <Button
-          color="#fff"
-          title="Search for movie"
-          onPress={() =>
-            Alert.prompt(
-              "Search Movie",
-              "Search for movies containing this text in their title"
-            )
-          }
-        ></Button>
+        <TextInput
+          style={styles.input}
+          onChangeText={updateSearch}
+          value={search}
+          placeholder="Search for a Marvel Movie"
+          onSubmitEditing={submitPress}
+        />
         <Button
           color="#fff"
           title="Show all movies"
@@ -95,5 +110,14 @@ const styles = StyleSheet.create({
     paddingBottom: "5%",
     flex: 1,
     flexDirection: "row",
+  },
+  input: {
+    borderColor: "gray",
+    width: 180,
+    height: 50,
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 10,
+    color: "#fff",
   },
 });
