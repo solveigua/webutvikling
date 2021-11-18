@@ -14,7 +14,7 @@ class LazyLoadData extends Component {
     const { data } = useQuery(LAZY_LOADING, {
       variables: { limit: this.limit, start: currentPage },
     });
-    setCurrentPage(currentPage+2)
+    setCurrentPage(currentPage + 2);
     setMovies(
       data.map((movie: Movie) => (
         <MovieItem
@@ -29,15 +29,15 @@ class LazyLoadData extends Component {
     );
   };
 
-  renderItem = (movie : Movie ) => (
+  renderItem = (movie: Movie) => (
     <MovieItem
-    key={movie._id}
-    _id={movie._id}
-    title={movie.title}
-    seqNr={movie.seqNr}
-    releaseYear={movie.releaseYear}
-    rating={movie.rating}
-  />
+      key={movie._id}
+      _id={movie._id}
+      title={movie.title}
+      seqNr={movie.seqNr}
+      releaseYear={movie.releaseYear}
+      rating={movie.rating}
+    />
   );
 
   render = () => {

@@ -1,6 +1,6 @@
 import { ApolloClient } from "@apollo/client";
 import { Dispatch } from "react";
-import { GET_ALL_MOVIES } from "../util/queries";
+import { GET_ALL_MOVIES, LAZY_LOADING } from "../util/queries";
 import { SEARCH_MOVIE, FETCH_MOVIES, SORT_MOVIES } from "./types";
 import { dispatchType } from "./types";
 import { Movie } from "../types";
@@ -41,6 +41,28 @@ export const fetchMovies = (text: string) => async (dispatch: Dispatch<dispatchT
       })
 
       const arr = res?.data.getAllMovies
+        dispatch({
+            type: FETCH_MOVIES,
+            payload: arr.filter((movie:Movie) => 
+            movie.title.toLowerCase().includes(text.toLowerCase()))
+        });
+        
+}
+
+export const fetchMoviesLazy = (text: string, start: number, limit:number) => async (dispatch: Dispatch<dispatchType>) => {
+
+    const client = new ApolloClient({
+        uri: 'http://it2810-19.idi.ntnu.no:4000/graphql',
+        cache: new InMemoryCache()
+      })
+    
+
+    const res = await client.query({
+        query: LAZY_LOADING,
+        variables: {},
+      })
+
+      const arr = res?.data.lazyLoading
         dispatch({
             type: FETCH_MOVIES,
             payload: arr.filter((movie:Movie) => 
