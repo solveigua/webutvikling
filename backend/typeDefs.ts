@@ -1,34 +1,34 @@
-import {gql} from 'apollo-server-express';
+import { gql } from "apollo-server-express";
 
 export interface movie {
-    _id: string;
-    title: string;
-    seqNr: number;
-    releaseYear: number;
-    rating: number;
+  _id: string;
+  title: string;
+  seqNr: number;
+  releaseYear: number;
+  rating: number;
 }
 
 export interface movieList {
-    movies: movie[]
+  movies: movie[];
 }
 
-export const typeDefs = gql`
-type Movie {
+const typeDefs = gql`
+  type Movie {
     _id: ID!
     title: String
     seqNr: Int
     releaseYear: Int
     rating: Int
-}
+  }
 
-type Character {
+  type Character {
     _id: ID!
     name: String
     actor: String
     appearencesInMovies: Int
     movies: [String]
-}
-type Query {
+  }
+  type Query {
     hello: String
 
     getAllMovies: [Movie]
@@ -36,22 +36,29 @@ type Query {
 
     getAllCharacters: [Character]
     getCharacter(input: characterId): Character
-    getMoviesFromCharacter: [String]
-}
 
-type Mutation {
+    lazyLoading(input: loadingInput): [Movie]
+  }
+
+  type Mutation {
     setRating(input: ratingInput): Movie
-}
+  }
 
-input movieId{
+  input movieId {
     id: ID
-}
-input characterId{
+  }
+  input characterId {
     id: ID
-}
-input ratingInput {
+  }
+  input ratingInput {
     movieId: ID!
     rating: Int
-}
+  }
+
+  input loadingInput {
+    limit: Int
+    start: Int
+  }
 `;
 
+export default typeDefs;
