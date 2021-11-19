@@ -4,31 +4,21 @@
 
 import { Movie } from "./models/movie";
 import { Character } from "./models/character";
-import mongoose from "mongoose";
+import mongoose, { ObjectId } from "mongoose";
 
-//TODO: remove unused interfaces
+type movieId = {
+  id: ObjectId;
+};
 
-/*interface IMovie {
-    id: String;
-    title: String;
-    seqNr: number;
-    releaseYear: number;
-    rating: number;
+type ratingInput = {
+  movieId: ObjectId;
+  rating: Number;
+};
 
-}
-
-interface Character {
-    id: String
-    name: String
-    actor: String
-    appearencesInMovies: number
-    movies: [String]
-}
-
-interface ratingInput {
-    id: String,
-    rating: number
-}*/
+type loadingInput = {
+  limit: Number;
+  start: Number;
+};
 
 export const resolvers = {
   Query: {
@@ -40,12 +30,7 @@ export const resolvers = {
       console.log(movies);
       return movies;
     },
-
-    getAllCharacters: async () => {
-      const characters = await Character.find();
-      return characters;
-    },
-    getMovie: async (_: any, args: any) => {
+    getMovie: async (_: Object, args: { input: movieId }) => {
       console.log(args.input.id);
       try {
         const movie = await Movie.findById(args.input.id);
@@ -55,17 +40,7 @@ export const resolvers = {
       }
     },
 
-    getCharacter: async (_: any, args: any) => {
-      console.log(args.input.id);
-      try {
-        const character = await Character.findById(args.input.id);
-        return character;
-      } catch (err) {
-        throw err;
-      }
-    },
-
-    lazyLoading: async (_: any, args: any) => {
+    lazyLoading: async (_: Object, args: { input: loadingInput }) => {
       try {
         const allMovies = await Movie.find();
         const start = false;
@@ -87,7 +62,7 @@ export const resolvers = {
   },
 
   Mutation: {
-    setRating: async (_: any, args: any) => {
+    setRating: async (_: Object, args: { input: ratingInput }) => {
       console.log(args.input);
       try {
         const movie = await Movie.findById(args.input.movieId);
