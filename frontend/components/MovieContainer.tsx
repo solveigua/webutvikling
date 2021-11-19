@@ -10,6 +10,7 @@ interface IMoviesContainerProps {
 
 // MoviesContainer is used in Movies
 export class MoviesContainer extends Component<IMoviesContainerProps> {
+    
    
 
     render() {
