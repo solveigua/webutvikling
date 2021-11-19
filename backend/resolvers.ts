@@ -4,7 +4,7 @@
 
 import { Movie } from "./models/movie";
 import { Character } from "./models/character";
-//import mongoose from "mongoose";
+import { ObjectId } from "mongoose";
 
 type movieId = {
   id: ObjectId;
