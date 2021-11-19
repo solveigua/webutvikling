@@ -43,7 +43,7 @@ const initialState: movieState = {
   text: "",
   movies: [],
   movie: null,
-  sort: JSON.parse(localStorage.getItem("type") || "{}").type,
+  sort: "chronological",
 };
 
 export default function foo(state = initialState, action: Action) {
@@ -56,7 +56,7 @@ export default function foo(state = initialState, action: Action) {
     case FETCH_MOVIES:
       return {
         ...state,
-        movies: [...state.movies, ...action.payload],
+        movies: action.payload,
       };
     case SORT_MOVIES:
       return {
