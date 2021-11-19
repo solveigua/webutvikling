@@ -20,4 +20,5 @@ const AllMovies = () => {
         </div>
     )
 }
+
 export default AllMovies;
