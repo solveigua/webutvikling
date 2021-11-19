@@ -52,6 +52,8 @@ export const fetchMovies = (text: string) => async (
   });
 };
 
+// Oppdatert funksjon for å dispatche en LAZY_LOADING-action med de filtrerte filmene som payload
+// Henter data fra databasen, søker etter innhold i tittel
 export const fetchMoviesLazy = (
   text: string,
   start: number,

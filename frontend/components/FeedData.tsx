@@ -12,7 +12,7 @@ class LazyLoadData extends Component {
   limit = 2;
   fetchResult = () => {
     const { data } = useQuery(LAZY_LOADING, {
-      variables: { limit: this.limit, start: currentPage },
+      variables: { text: " ", limit: this.limit, start: currentPage },
     });
     setMovies(
       data.map((movie: Movie) => (

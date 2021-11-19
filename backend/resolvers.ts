@@ -4,7 +4,7 @@
 
 import { Movie } from "./models/movie";
 import { Character } from "./models/character";
-//import mongoose from "mongoose";
+import { ObjectId } from "mongoose";
 
 type movieId = {
   id: ObjectId;
@@ -16,6 +16,7 @@ type ratingInput = {
 };
 
 type loadingInput = {
+  text: String;
   limit: number;
   start: number;
 };
@@ -43,12 +44,16 @@ export const resolvers = {
     lazyLoading: async (_: Object, args: { input: loadingInput }) => {
       try {
         const allMovies: any[] = await Movie.find();
+        //Find only movies we are searching for:
+        const theseMovies: any[] = allMovies.filter((movie) =>
+          movie.title.toLowerCase().includes(args.input.text.toLowerCase())
+        );
         const start = false;
         const endResult = [];
 
-        for (let i = args.input.start; i <= allMovies.length; i++) {
+        for (let i = args.input.start; i <= theseMovies.length; i++) {
           if (i <= args.input.limit + args.input.start - 1) {
-            endResult.push(allMovies[i]);
+            endResult.push(theseMovies[i]);
           }
           if (args.input.limit && endResult.length === args.input.limit) {
             break;

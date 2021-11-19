@@ -6,7 +6,6 @@ import MovieItem from "./components/MovieItem";
 import MovieSummary from "./components/MovieSummary";
 import Sortbar from "./components/Sortbar";
 import store from "./store";
-import { Provider } from "react-redux";
 
 export default function App() {
   return (
@@ -18,6 +17,7 @@ export default function App() {
           style={styles.image}
         ></Image>
         <Sortbar />
+        <MovieSummary />
       </SafeAreaView>
     </Provider>
   );

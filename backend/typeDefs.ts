@@ -56,6 +56,7 @@ const typeDefs = gql`
   }
 
   input loadingInput {
+    text: String
     limit: Int
     start: Int
   }

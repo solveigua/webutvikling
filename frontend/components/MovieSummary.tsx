@@ -19,6 +19,7 @@ const MovieItemTmp = ({ movie }: any) => {
 
 const MovieSummary = () => {
   const movieState = useSelector((state: any) => state.movies.movies);
+  console.log(movieState);
 
   const dispatch = useDispatch();
 
