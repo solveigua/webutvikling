@@ -4,7 +4,7 @@ import { connect, useDispatch, useSelector } from "react-redux";
 import { fetchMoviesLazy } from "../actions/searchActions";
 import MovieItem from "./MovieItem";
 
-const MovieItemTmp = ({ movie }: any) => {
+const Movie = ({ movie }: any) => {
   return (
     <MovieItem
       key={movie._id}
@@ -35,7 +35,7 @@ const MovieSummary = () => {
           dispatch(fetchMoviesLazy("", movieState.length, 8));
         }}
         onEndReachedThreshold={0.5}
-        renderItem={(item) => <MovieItemTmp movie={item.item} />}
+        renderItem={(item) => <Movie movie={item.item} />}
       />
     </View>
   );

@@ -15,10 +15,9 @@ import { coverMovies } from "../assets";
 
 const MovieItem: React.FC<{key:string, _id:string, title:string, seqNr:number, releaseYear:number, rating: number}> = (props)=> {
 
-  //---- statehandling --//
-  const [rating, setRating] = useState<number>(props.rating); //default rating, taken from
-  const [hover, setHover] = useState<Number | null | undefined>(null);
+  //---- statehandling and change --//
   const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [rating, setRating] = useState<number>(props.rating); 
 
   /*const [rateMovie] = useMutation(SET_RATING) //To set a new rating when new rating is clicked
 
@@ -32,19 +31,15 @@ const MovieItem: React.FC<{key:string, _id:string, title:string, seqNr:number, r
       }
   }*/
 
-  //finds correct picture to Movie
-  const found = coverMovies.find(element => element.seqNr === props.seqNr);
-
-  const [defaultRating, setDefaultRating] = useState(2);
-  // To set the max number of Stars
-  const [maxRating, setMaxRating] = useState([1, 2, 3, 4, 5]);
-
-  // Filled Star. You can also give the path from local
+  //---------Rating bar-----------//
+  // Filled Star
   const starImageFilled =
     'https://raw.githubusercontent.com/AboutReact/sampleresource/master/star_filled.png';
-  // Empty Star. You can also give the path from local
+  // Empty Star
   const starImageCorner =
     'https://raw.githubusercontent.com/AboutReact/sampleresource/master/star_corner.png';
+
+  const maxRating = [1,2,3,4,5]
 
   const CustomRatingBar = () => {
     return (
@@ -54,12 +49,12 @@ const MovieItem: React.FC<{key:string, _id:string, title:string, seqNr:number, r
             <TouchableOpacity
               activeOpacity={0.7}
               key={item}
-              onPress={() => setDefaultRating(item)}>
+              onPress={() => setRating(item)}>
 
               <Image
                 style={styles.starImageStyle}
                 source={
-                  item <= defaultRating
+                  item <= rating
                     ? { uri: starImageFilled }
                     : { uri: starImageCorner }
                 }
@@ -71,6 +66,7 @@ const MovieItem: React.FC<{key:string, _id:string, title:string, seqNr:number, r
     );
   };
 
+  //--------- MovieItem ---------//
   
   return (
     <View style={styles.centeredView}>
@@ -97,15 +93,15 @@ const MovieItem: React.FC<{key:string, _id:string, title:string, seqNr:number, r
          
             <Image
               style={styles.startImage}
-              source={require('../assets/marvel_pictures/Cap_first.jpg')} //{require(found!picture)}
+              source={coverMovies[props.seqNr]} //mapping the movie to seqNr
             >
             </Image>
 
-            <Text style={styles.titleText} /*{props.title}*/> Captain America: The first avenger </Text> 
-            <Text style={styles.releaseYearText}/*{props.releaseYear}*/> 2010 </Text>
+            <Text style={styles.titleText}> {props.title} </Text> 
+            <Text style={styles.releaseYearText}> {props.releaseYear} </Text>
             <View style={styles.star}>
             <CustomRatingBar />
-            <Text style={styles.rating}> Your rating is: {defaultRating} </Text>
+            <Text style={styles.rating}> Your rating is: {rating} </Text>
             </View>
             <Pressable
               style={ styles.buttonClose}
@@ -123,7 +119,7 @@ const MovieItem: React.FC<{key:string, _id:string, title:string, seqNr:number, r
       <View>
       <TouchableOpacity onPress={() => setModalVisible(true)}>
         <Image
-          source={require('../assets/marvel_pictures/Cap_first.jpg')}
+          source={coverMovies[props.seqNr]} //mapping the movie to SeqNr
           style={styles.image}
         />
       </TouchableOpacity>
