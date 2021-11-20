@@ -47,11 +47,6 @@ export default function Sortbar() {
 
   return (
     <View style={styles.sortbar}>
-      <Text style={styles.titleText}>Marvel Cinematic Universe</Text>
-      <Text style={styles.paragraphText}>
-        Search for your favourite Marvel Cinematic Universe movies and give them
-        a rating!
-      </Text>
       <Text style={styles.paragraphTextBold}>Sort movies based on: </Text>
       <View style={styles.sortButtonsView}>
         <Button
@@ -87,14 +82,14 @@ export default function Sortbar() {
 
 const styles = StyleSheet.create({
   sortbar: {
-    height: "150",
-    backgroundColor: "#000000",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
     textAlign: "center",
     width: "90%",
     position: "relative",
     color: "white",
     borderRadius: 14,
     alignItems: "center",
+    height: 250,
   },
   paragraphText: {
     color: "#fff",
@@ -108,6 +103,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     textAlign: "center",
     paddingBottom: 10,
+    paddingTop: 10,
   },
   paragraphTextBoldPad: {
     fontWeight: "bold",

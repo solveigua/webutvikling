@@ -55,7 +55,7 @@ export const fetchMoviesLazy =
   (text: string, start: number, limit: number) =>
   async (dispatch: Dispatch<dispatchType>) => {
     const client = new ApolloClient({
-      uri: "http://localhost:4001/graphql",
+      uri: "http://10.22.11.8:4001/graphql",
       cache: new InMemoryCache(),
     });
 
