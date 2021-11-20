@@ -34,13 +34,13 @@ const MovieSummary = () => {
 
   useEffect(() => {
     console.log("useEffect changed");
-    dispatch(fetchMoviesLazy(searchText, 0, 3, true));
+    dispatch(fetchMoviesLazy(searchText, 0, 3, "sequence", true));
   }, [searchText]);
 
   const renderNew = (event: any) => {
     movieState.length > 23
       ? console.log("done")
-      : dispatch(fetchMoviesLazy(searchText, movieState.length, 3));
+      : dispatch(fetchMoviesLazy(searchText, movieState.length, 3, "sequence"));
   };
 
   return (
