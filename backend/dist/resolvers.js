@@ -1,4 +1,18 @@
 "use strict";
+/**
+ * Exports all resolvers
+ */
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -37,11 +51,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.resolvers = void 0;
-/**
- * Exports all resolvers
- */
 var movie_1 = require("./models/movie");
-var character_1 = require("./models/character");
 exports.resolvers = {
     Query: {
         hello: function () {
@@ -54,19 +64,8 @@ exports.resolvers = {
                     case 0: return [4 /*yield*/, movie_1.Movie.find()];
                     case 1:
                         movies = _a.sent();
-                        //console.log(movies);
+                        console.log(movies);
                         return [2 /*return*/, movies];
-                }
-            });
-        }); },
-        getAllCharacters: function () { return __awaiter(void 0, void 0, void 0, function () {
-            var characters;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, character_1.Character.find()];
-                    case 1:
-                        characters = _a.sent();
-                        return [2 /*return*/, characters];
                 }
             });
         }); },
@@ -90,17 +89,26 @@ exports.resolvers = {
                 }
             });
         }); },
-        //Brukes ikke: kan slettes
-        getMoviesFromCharacter: function (_, args) { return __awaiter(void 0, void 0, void 0, function () {
-            var character, err_2;
+        lazyLoading: function (_, args) { return __awaiter(void 0, void 0, void 0, function () {
+            var searchCondition, sortCondition, movies, err_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, character_1.Character.findById(args.input.id)];
+                        console.log(args.input.sorting);
+                        searchCondition = {};
+                        sortCondition = args.input.sorting === "year" ? { releaseYear: 1 } : { seqNr: 1 };
+                        //Hvis det ikke er en tom string:
+                        if (args.input.text !== "") {
+                            searchCondition = __assign(__assign({}, searchCondition), { title: { $regex: new RegExp(args.input.text, "i") } });
+                        }
+                        return [4 /*yield*/, movie_1.Movie.find(searchCondition)
+                                .sort(sortCondition)
+                                .skip(args.input.start)
+                                .limit(args.input.limit)];
                     case 1:
-                        character = _a.sent();
-                        return [3 /*break*/, 3];
+                        movies = _a.sent();
+                        return [2 /*return*/, movies];
                     case 2:
                         err_2 = _a.sent();
                         throw err_2;
@@ -108,30 +116,10 @@ exports.resolvers = {
                 }
             });
         }); },
-        getCharacter: function (_, args) { return __awaiter(void 0, void 0, void 0, function () {
-            var character, err_3;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        console.log(args.input.id);
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, character_1.Character.findById(args.input.id)];
-                    case 2:
-                        character = _a.sent();
-                        return [2 /*return*/, character];
-                    case 3:
-                        err_3 = _a.sent();
-                        throw err_3;
-                    case 4: return [2 /*return*/];
-                }
-            });
-        }); }
     },
     Mutation: {
         setRating: function (_, args) { return __awaiter(void 0, void 0, void 0, function () {
-            var movie, err_4;
+            var movie, err_3;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -142,20 +130,20 @@ exports.resolvers = {
                         return [4 /*yield*/, movie_1.Movie.findById(args.input.movieId)];
                     case 2:
                         movie = _a.sent();
-                        console.log(movie);
+                        console.log(JSON.parse(JSON.stringify(movie)));
                         if (!movie) return [3 /*break*/, 4];
                         return [4 /*yield*/, movie_1.Movie.updateOne(movie, { $set: { rating: args.input.rating } })];
                     case 3:
                         _a.sent();
                         return [2 /*return*/, movie];
-                    case 4: throw new Error('Movie does not exist in database. ');
+                    case 4: throw new Error("Movie does not exist in database. ");
                     case 5: return [3 /*break*/, 7];
                     case 6:
-                        err_4 = _a.sent();
-                        throw err_4;
+                        err_3 = _a.sent();
+                        throw err_3;
                     case 7: return [2 /*return*/];
                 }
             });
-        }); }
-    }
+        }); },
+    },
 };

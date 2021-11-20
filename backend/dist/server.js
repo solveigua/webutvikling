@@ -43,7 +43,7 @@ var express_1 = __importDefault(require("express"));
 var apollo_server_express_1 = require("apollo-server-express");
 var mongoose_1 = __importDefault(require("mongoose"));
 var resolvers_1 = require("./resolvers");
-var typeDefs_1 = require("./typeDefs");
+var typeDefs_1 = __importDefault(require("./typeDefs"));
 function startServer() {
     return __awaiter(this, void 0, void 0, function () {
         var app, apolloserver, err_1;
@@ -53,7 +53,7 @@ function startServer() {
                     _a.trys.push([0, 3, , 4]);
                     app = (0, express_1.default)();
                     apolloserver = new apollo_server_express_1.ApolloServer({
-                        typeDefs: typeDefs_1.typeDefs,
+                        typeDefs: typeDefs_1.default,
                         resolvers: resolvers_1.resolvers,
                     });
                     return [4 /*yield*/, apolloserver.start()];
@@ -63,16 +63,17 @@ function startServer() {
                     app.use(function (req, res) {
                         res.send("Hello from express apollo server");
                     });
-                    return [4 /*yield*/, mongoose_1.default.connect('mongodb://solveig:aune@it2810-19.idi.ntnu.no:27017/marvel?authSource=marvel&readPreference=primary&appname=MongoDB%20Compass&ssl=false', {
-                            useUnifiedTopology: true,
-                            useNewUrlParser: true,
+                    return [4 /*yield*/, mongoose_1.default
+                            .connect("mongodb://solveig:aune@it2810-19.idi.ntnu.no:27017/marvel?authSource=marvel&readPreference=primary&appname=MongoDB%20Compass&ssl=false", {
+                        // useUnifiedTopology: true,
+                        // useNewUrlParser: true,
                         })
                             .then(function () {
-                            console.log('Mongoose connected successfully');
+                            console.log("Mongoose connected successfully");
                         })];
                 case 2:
                     _a.sent();
-                    app.listen(4000, function () { return console.log("server is running on port 4000"); });
+                    app.listen(4002, function () { return console.log("server is running on port 4002"); });
                     return [3 /*break*/, 4];
                 case 3:
                     err_1 = _a.sent();
