@@ -25,9 +25,10 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    //flex: 1,
     backgroundColor: "#ED1D24",
     alignItems: "center",
+    height: "100vh",
   },
   image: {
     width: "100%",
