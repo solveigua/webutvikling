@@ -1,4 +1,9 @@
-import { SEARCH_MOVIE, FETCH_MOVIES, SORT_MOVIES } from "../actions/types";
+import {
+  SEARCH_MOVIE,
+  FETCH_MOVIES,
+  SORT_MOVIES,
+  FETCH_LAZY,
+} from "../actions/types";
 
 // searchReducer is not a completely appropriate name as it contains all the reducers
 
@@ -36,7 +41,12 @@ export interface ActionSort {
   payload: string;
 }
 
-export type Action = ActionSearch | ActionFetch | ActionSort;
+export interface ActionLazy {
+  type: "FETCH_LAZY";
+  payload: string;
+}
+
+export type Action = ActionSearch | ActionFetch | ActionSort | ActionLazy;
 
 // An initialState for when starting app
 const initialState: movieState = {
@@ -62,6 +72,11 @@ export default function foo(state = initialState, action: Action) {
       return {
         ...state,
         sort: action.payload,
+      };
+    case FETCH_LAZY:
+      return {
+        ...state,
+        movies: action.payload,
       };
     default:
       return state;

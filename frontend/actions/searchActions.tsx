@@ -1,7 +1,7 @@
 import { ApolloClient } from "@apollo/client";
 import { Dispatch } from "react";
 import { GET_ALL_MOVIES, LAZY_LOADING } from "../util/queries";
-import { SEARCH_MOVIE, FETCH_MOVIES, SORT_MOVIES } from "./types";
+import { SEARCH_MOVIE, FETCH_MOVIES, SORT_MOVIES, FETCH_LAZY } from "./types";
 import { dispatchType } from "./types";
 import { Movie } from "../types";
 import { InMemoryCache } from "@apollo/client";
@@ -52,6 +52,8 @@ export const fetchMovies = (text: string) => async (
   });
 };
 
+// Oppdatert funksjon for å dispatche en LAZY_LOADING-action med de filtrerte filmene som payload
+// Henter data fra databasen, søker etter innhold i tittel
 export const fetchMoviesLazy = (
   text: string,
   start: number,
@@ -74,11 +76,7 @@ export const fetchMoviesLazy = (
   const arr = res?.data.lazyLoading;
 
   dispatch({
-    type: FETCH_MOVIES,
-    payload: arr.filter((movie: Movie) => {
-      if (movie !== null) {
-        return movie.title.toLowerCase().includes(text.toLowerCase());
-      }
-    }),
+    type: FETCH_LAZY,
+    payload: arr,
   });
 };

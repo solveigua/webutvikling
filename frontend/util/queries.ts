@@ -47,8 +47,8 @@ const GET_CHARACTER = gql`
 `;
 
 const LAZY_LOADING = gql`
-  query($limit: Int, $start: Int) {
-    lazyLoading(input: { limit: $limit, start: $start }) {
+  query($text: String, $limit: Int, $start: Int) {
+    lazyLoading(input: { text: $text, limit: $limit, start: $start }) {
       title
       rating
       seqNr
