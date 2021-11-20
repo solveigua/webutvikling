@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#ED1D24",
     alignItems: "center",
+    height: "100%",
   },
   image: {
     width: "100%",
@@ -35,5 +36,6 @@ const styles = StyleSheet.create({
     zIndex: 0,
     overflow: "hidden",
     transform: [{ rotate: "-5deg" }],
+    position: "absolute",
   },
 });

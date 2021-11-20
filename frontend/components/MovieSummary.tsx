@@ -1,6 +1,6 @@
-import React, { Component, useEffect, useState } from "react";
-import { FlatList, View, Text, SafeAreaView } from "react-native";
-import { connect, useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { FlatList } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchMoviesLazy } from "../actions/searchActions";
 import MovieItem from "./MovieItem";
 
@@ -22,35 +22,36 @@ const MovieSummary = () => {
     (state: any) => state.movies.movies
   );
 
+  const searchText: string = useSelector<any, any>(
+    (state: any) => state.movies.text
+  );
+
+  const sorting: string = useSelector<any, any>(
+    (state: any) => state.movies.sort
+  );
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     console.log("useEffect changed");
-    console.log(value);
-    dispatch(fetchMoviesLazy("", 0, 3));
-  }, []);
+    dispatch(fetchMoviesLazy(searchText, 0, 3, true));
+  }, [searchText]);
 
-  const [value, setValue] = useState(3);
-
-  const renderNew = () => {
-    value > 23 ? console.log("done") : dispatch(fetchMoviesLazy("", value, 3));
-    setValue(value + movieState.length);
-
-    console.log(movieState);
-    console.log(movieState.length);
+  const renderNew = (event: any) => {
+    movieState.length > 23
+      ? console.log("done")
+      : dispatch(fetchMoviesLazy(searchText, movieState.length, 3));
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <FlatList
-        style={{ flex: 1 }}
-        data={movieState}
-        onEndReached={renderNew}
-        onEndReachedThreshold={0.1}
-        keyExtractor={(item, index) => "key" + index}
-        renderItem={(item) => <MovieItemTmp movie={item.item} />}
-      />
-    </SafeAreaView>
+    <FlatList
+      style={{ flex: 1 }}
+      data={movieState}
+      onEndReached={renderNew}
+      onEndReachedThreshold={0.5}
+      keyExtractor={(item, index) => "key" + index}
+      renderItem={(item) => <MovieItemTmp movie={item.item} />}
+    />
   );
 };
 
