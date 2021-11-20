@@ -1,3 +1,4 @@
+import { useMutation } from "@apollo/client";
 import React, { useState } from "react";
 import {
   Alert,
@@ -13,6 +14,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { coverMovies } from "../assets";
+import { SET_RATING } from "../util/queries";
 
 const MovieItem: React.FC<{
   key: string;
@@ -26,17 +28,17 @@ const MovieItem: React.FC<{
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [rating, setRating] = useState<number>(props.rating);
 
-  /*const [rateMovie] = useMutation(SET_RATING) //To set a new rating when new rating is clicked
+  const [rateMovie] = useMutation(SET_RATING); //To set a new rating when new rating is clicked
 
   //For setting a new rating
   const handleChange = async (newRating: number | null) => {
-      if (typeof newRating === 'number') {
-          localStorage.setItem(JSON.stringify(props._id), newRating.toString());
-          setRating(newRating)
-          console.log(props);
-          await rateMovie({ variables: { id: props._id, rating: newRating } })
-      }
-  }*/
+    if (typeof newRating === "number") {
+      localStorage.setItem(JSON.stringify(props._id), newRating.toString());
+      setRating(newRating);
+      console.log(props);
+      await rateMovie({ variables: { id: props._id, rating: newRating } });
+    }
+  };
 
   //---------Rating bar-----------//
   // Filled Star
@@ -56,7 +58,7 @@ const MovieItem: React.FC<{
             <TouchableOpacity
               activeOpacity={0.7}
               key={item}
-              onPress={() => setRating(item)}
+              onPress={() => handleChange(item)}
             >
               <Image
                 style={styles.starImageStyle}

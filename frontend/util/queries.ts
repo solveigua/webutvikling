@@ -47,19 +47,20 @@ const GET_CHARACTER = gql`
 `;
 
 const LAZY_LOADING = gql`
-  query($text: String, $limit: Int, $start: Int) {
-    lazyLoading(input: { text: $text, limit: $limit, start: $start }) {
+  query($text: String, $limit: Int, $start: Int, $sorting: String) {
+    lazyLoading(input: { text: $text, limit: $limit, start: $start, sorting: $sorting }) {
       title
       rating
       seqNr
       releaseYear
+      _id
     }
   }
 `;
 
 //Mutation:
 const SET_RATING = gql`
-  mutation($id: ID, $rating: Int!) {
+  mutation($id: ID!, $rating: Int!) {
     setRating(input: { movieId: $id, rating: $rating }) {
       title
       rating

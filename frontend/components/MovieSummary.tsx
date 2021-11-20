@@ -5,6 +5,7 @@ import { fetchMoviesLazy } from "../actions/searchActions";
 import MovieItem from "./MovieItem";
 
 const MovieItemTmp = ({ movie }: any) => {
+  console.log(movie);
   return (
     <MovieItem
       key={movie._id}
@@ -34,13 +35,13 @@ const MovieSummary = () => {
 
   useEffect(() => {
     console.log("useEffect changed");
-    dispatch(fetchMoviesLazy(searchText, 0, 3, "sequence", true));
-  }, [searchText]);
+    dispatch(fetchMoviesLazy(searchText, 0, 3, sorting, true));
+  }, [searchText, sorting]);
 
   const renderNew = (event: any) => {
     movieState.length > 23
       ? console.log("done")
-      : dispatch(fetchMoviesLazy(searchText, movieState.length, 3, "sequence"));
+      : dispatch(fetchMoviesLazy(searchText, movieState.length, 3, sorting));
   };
 
   return (
