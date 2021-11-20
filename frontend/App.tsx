@@ -1,3 +1,9 @@
+import {
+  ApolloClient,
+  ApolloProvider,
+  createHttpLink,
+  InMemoryCache,
+} from "@apollo/client";
 import React from "react";
 import { StyleSheet, SafeAreaView, Image, View } from "react-native";
 import { Provider } from "react-redux";
@@ -8,18 +14,29 @@ import Sortbar from "./components/Sortbar";
 import store from "./store";
 
 export default function App() {
+  const link = createHttpLink({
+    uri: "http://it2810-19.idi.ntnu.no:4002/graphql",
+    credentials: "same-origin",
+  });
+
+  const client = new ApolloClient({
+    link,
+    cache: new InMemoryCache(),
+  });
   return (
-    <Provider store={store}>
-      <SafeAreaView style={styles.container}>
-        <Header />
-        <Image
-          source={require("./assets/marvel_pictures/marvel.png")}
-          style={styles.image}
-        ></Image>
-        <Sortbar />
-        <MovieSummary />
-      </SafeAreaView>
-    </Provider>
+    <ApolloProvider client={client}>
+      <Provider store={store}>
+        <SafeAreaView style={styles.container}>
+          <Header />
+          <Image
+            source={require("./assets/marvel_pictures/marvel.png")}
+            style={styles.image}
+          ></Image>
+          <Sortbar />
+          <MovieSummary />
+        </SafeAreaView>
+      </Provider>
+    </ApolloProvider>
   );
 }
 

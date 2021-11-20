@@ -40,7 +40,7 @@ export default function Sortbar() {
 
   const allMoviesPress = () => {
     // Gjør noe med allMovies her
-    updateSearch(" ");
+    updateSearch("");
   };
 
   return (
