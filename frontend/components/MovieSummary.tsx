@@ -4,7 +4,7 @@ import { connect, useDispatch, useSelector } from "react-redux";
 import { fetchMoviesLazy } from "../actions/searchActions";
 import MovieItem from "./MovieItem";
 
-const MovieItemTmp = ({ movie }: any) => {
+const Movie = ({ movie }: any) => {
   return (
     <MovieItem
       key={movie._id}
