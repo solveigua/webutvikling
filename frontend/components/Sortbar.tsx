@@ -28,6 +28,7 @@ export default function Sortbar() {
     );
   };
 
+  //Brukes ikke til noe spess, bare logges
   const searchText: string = useSelector<any, any>(
     (state) => state.movies.text
   );
@@ -35,10 +36,13 @@ export default function Sortbar() {
   const submitPress = () => {
     // Trenger vi noe her?
     console.log(searchText);
+    setSearch("");
   };
 
   const allMoviesPress = () => {
     // Gjør noe med allMovies her
+    Alert.alert("Show all movies", "Showing all movies");
+    updateSearch("");
   };
 
   return (
@@ -61,8 +65,8 @@ export default function Sortbar() {
           onPress={chronologicalPress}
         ></Button>
       </View>
-      <Text style={styles.paragraphTextBold}> Movie options: </Text>
-      <View style={styles.buttonsView}>
+      <Text style={styles.paragraphTextBold}> Search for a movie: </Text>
+      <View style={styles.searchView}>
         <TextInput
           style={styles.input}
           onChangeText={updateSearch}
@@ -70,10 +74,11 @@ export default function Sortbar() {
           placeholder="Search for a Marvel Movie"
           onSubmitEditing={submitPress}
         />
+        <Text style={styles.paragraphTextBoldPad}>or..</Text>
         <Button
           color="#fff"
           title="Show all movies"
-          onPress={() => Alert.alert("Show all movies", "Showing all movies")}
+          onPress={allMoviesPress}
         ></Button>
       </View>
     </View>
@@ -85,15 +90,11 @@ const styles = StyleSheet.create({
     height: "40%",
     backgroundColor: "#000000",
     textAlign: "center",
-    //maxWidth: "45rem",
     width: "90%",
-    //marginTop: "-10rem",
     position: "relative",
     color: "white",
     borderRadius: 14,
-    //padding: "1rem",
     alignItems: "center",
-    //justifyContent: "center",
   },
   paragraphText: {
     color: "#fff",
@@ -107,6 +108,14 @@ const styles = StyleSheet.create({
     fontSize: 12,
     textAlign: "center",
     paddingBottom: 10,
+  },
+  paragraphTextBoldPad: {
+    fontWeight: "bold",
+    color: "#fff",
+    fontSize: 12,
+    textAlign: "center",
+    paddingBottom: 10,
+    paddingTop: "2%",
   },
   titleText: {
     color: "#fff",
@@ -133,5 +142,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
     color: "#fff",
+  },
+  searchView: {
+    backgroundColor: "transparent",
+    paddingBottom: "20%",
+    flex: 1,
+    flexDirection: "column",
   },
 });
