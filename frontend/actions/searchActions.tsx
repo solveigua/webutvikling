@@ -52,7 +52,7 @@ export const fetchMovies =
 // Oppdatert funksjon for å dispatche en LAZY_LOADING-action med de filtrerte filmene som payload
 // Henter data fra databasen, søker etter innhold i tittel
 export const fetchMoviesLazy =
-  (text: string, start: number, limit: number) =>
+  (text: string, start: number, limit: number, cleanMovies: boolean = false) =>
   async (dispatch: Dispatch<dispatchType>) => {
     const client = new ApolloClient({
       uri: "http://10.22.11.8:4001/graphql",
@@ -68,10 +68,10 @@ export const fetchMoviesLazy =
       },
     });
 
-    const arr = res?.data.lazyLoading;
+    const arr = res?.data.lazyLoading.filter((it: any) => it !== null);
 
     dispatch({
-      type: FETCH_MORE,
+      type: cleanMovies ? FETCH_MOVIES : FETCH_MORE,
       payload: arr,
     });
   };

@@ -35,14 +35,12 @@ export default function Sortbar() {
 
   const submitPress = () => {
     // Trenger vi noe her?
-    console.log(searchText);
-    setSearch("");
+    //setSearch(" ");
   };
 
   const allMoviesPress = () => {
     // Gjør noe med allMovies her
-    Alert.alert("Show all movies", "Showing all movies");
-    updateSearch("");
+    updateSearch(" ");
   };
 
   return (
@@ -67,12 +65,12 @@ export default function Sortbar() {
           onChangeText={updateSearch}
           value={search}
           placeholder="Search for a Marvel Movie"
+          placeholderTextColor="#fff"
           onSubmitEditing={submitPress}
         />
-        <Text style={styles.paragraphTextBoldPad}>or..</Text>
         <Button
           color="#fff"
-          title="Show all movies"
+          title="Reset movies"
           onPress={allMoviesPress}
         ></Button>
       </View>
@@ -123,6 +121,7 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     flex: 1,
     flexDirection: "row",
+    alignItems: "center",
   },
   buttonsView: {
     backgroundColor: "transparent",
@@ -141,7 +140,7 @@ const styles = StyleSheet.create({
   },
   searchView: {
     backgroundColor: "transparent",
-    paddingBottom: "20%",
+    paddingBottom: "5%",
     flex: 1,
     flexDirection: "column",
   },
