@@ -53,7 +53,7 @@ const initialState: movieState = {
   text: "",
   movies: [],
   movie: null,
-  sort: "chronological",
+  sort: "sequence",
 };
 
 export default function foo(state = initialState, action: Action) {

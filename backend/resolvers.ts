@@ -16,10 +16,13 @@ type ratingInput = {
 };
 
 type loadingInput = {
-  text: String;
+  text: string;
   limit: number;
   start: number;
+  sorting: string;
 };
+
+type SearchCondition = { seqNr: 1 } | { releaseYear: 1 };
 
 export const resolvers = {
   Query: {
@@ -43,23 +46,25 @@ export const resolvers = {
 
     lazyLoading: async (_: Object, args: { input: loadingInput }) => {
       try {
-        const allMovies: any[] = await Movie.find();
-        //Find only movies we are searching for:
-        const theseMovies: any[] = allMovies.filter((movie) =>
-          movie.title.toLowerCase().includes(args.input.text.toLowerCase())
-        );
-        const start = false;
-        const endResult = [];
+        console.log(args.input.sorting);
+        let searchCondition = {};
 
-        for (let i = args.input.start; i <= theseMovies.length; i++) {
-          if (i <= args.input.limit + args.input.start - 1) {
-            endResult.push(theseMovies[i]);
-          }
-          if (args.input.limit && endResult.length === args.input.limit) {
-            break;
-          }
+        const sortCondition: SearchCondition =
+          args.input.sorting === "year" ? { releaseYear: 1 } : { seqNr: 1 };
+
+        //Hvis det ikke er en tom string:
+        if (args.input.text !== "") {
+          searchCondition = {
+            ...searchCondition,
+            title: { $regex: new RegExp(args.input.text, "i") },
+          };
         }
-        return endResult;
+        const movies: any[] = await Movie.find(searchCondition)
+          .sort(sortCondition)
+          .skip(args.input.start)
+          .limit(args.input.limit);
+
+        return movies;
       } catch (err) {
         throw err;
       }
