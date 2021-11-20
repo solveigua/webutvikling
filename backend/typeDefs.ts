@@ -59,6 +59,7 @@ const typeDefs = gql`
     text: String
     limit: Int
     start: Int
+    sorting: String
   }
 `;
 
