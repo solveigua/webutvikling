@@ -1,5 +1,5 @@
 import React, { Component, useEffect, useState } from "react";
-import { FlatList, View, Text } from "react-native";
+import { FlatList, View, Text, SafeAreaView } from "react-native";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { fetchMoviesLazy } from "../actions/searchActions";
 import MovieItem from "./MovieItem";
@@ -18,27 +18,39 @@ const MovieItemTmp = ({ movie }: any) => {
 };
 
 const MovieSummary = () => {
-  const movieState = useSelector((state: any) => state.movies.movies);
-  console.log(movieState);
+  const movieState: [] = useSelector<any, any>(
+    (state: any) => state.movies.movies
+  );
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchMoviesLazy("", 0, 8));
+    console.log("useEffect changed");
+    console.log(value);
+    dispatch(fetchMoviesLazy("", 0, 3));
   }, []);
 
+  const [value, setValue] = useState(3);
+
+  const renderNew = () => {
+    value > 23 ? console.log("done") : dispatch(fetchMoviesLazy("", value, 3));
+    setValue(value + movieState.length);
+
+    console.log(movieState);
+    console.log(movieState.length);
+  };
+
   return (
-    <View style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 }}>
       <FlatList
         style={{ flex: 1 }}
         data={movieState}
-        onEndReached={({ distanceFromEnd: number }) => {
-          dispatch(fetchMoviesLazy("", movieState.length, 8));
-        }}
-        onEndReachedThreshold={0.5}
+        onEndReached={renderNew}
+        onEndReachedThreshold={0.1}
+        keyExtractor={(item, index) => "key" + index}
         renderItem={(item) => <MovieItemTmp movie={item.item} />}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
