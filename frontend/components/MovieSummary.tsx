@@ -25,6 +25,7 @@ const MovieSummary = () => {
   const sorting: string = useSelector<any, any>(
     (state: any) => state.movies.sort
   );
+  const [scrollPosition, setScrollPosition] = useState(0);
 
   const dispatch = useDispatch();
 
@@ -45,26 +46,30 @@ const MovieSummary = () => {
 
   const [value, setValue] = useState(3);
 
-  const renderNew = () => {
-    movieState.length > 23
-      ? console.log("done")
-      : dispatch(fetchMoviesLazy("", movieState.length, 3));
-    //setValue(value + movieState.length);
+  const renderNew = (event: any) => {
+    value > 23 ? console.log("done") : dispatch(fetchMoviesLazy("", value, 3));
+    setValue(value + movieState.length);
+
+    // let yOffset=event.nativeEvent.contentOffset.y / 600;
+    // setScrollPosition(yOffset)
 
     console.log(movieState);
     console.log(movieState.length);
   };
 
   return (
-    <FlatList
-      style={{ flex: 1 }}
-      data={movieState}
-      onEndReached={renderNew}
-      onEndReachedThreshold={0.5}
-      keyExtractor={(item, index) => "key" + index}
-      //onMomentumScrollBegin = {() => {onEndReachedCalledDuringMomentum = false}}
-      renderItem={(item) => <MovieItemTmp movie={item.item} />}
-    />
+    <SafeAreaView style={{ flex: 1 }}>
+      <FlatList
+        style={{ flex: 1 }}
+        data={movieState}
+        onEndReached={renderNew}
+        onEndReachedThreshold={0}
+        // onScroll={(e) => renderNew(e)}
+        // initialScrollIndex={scrollPosition}
+        keyExtractor={(item, index) => "key" + index}
+        renderItem={(item) => <MovieItemTmp movie={item.item} />}
+      />
+    </SafeAreaView>
   );
 };
 

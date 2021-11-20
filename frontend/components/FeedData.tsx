@@ -1,45 +1,55 @@
 import { useQuery } from "@apollo/client";
-import { Component, useState } from "react";
+import React, { Component, useState } from "react";
 import { LAZY_LOADING } from "../util/queries";
 import { Movie } from "../types";
 import MovieItem from "../components/MovieItem";
-import { FlatList } from "react-native";
+import { FlatList, View } from "react-native";
 
-const [currentPage, setCurrentPage] = useState<number>(0);
-const [movies, setMovies] = useState<Movie[]>();
+const MovieItemTmp = ({ movie }: any) => {
+  return (
+    <MovieItem
+      key={movie._id}
+      _id={movie._id}
+      title={movie.title}
+      seqNr={movie.seqNr}
+      releaseYear={movie.releaseYear}
+      rating={movie.rating}
+    />
+  );
+};
 
-class LazyLoadData extends Component {
-  limit = 2;
-  fetchResult = () => {
-    const { data } = useQuery(LAZY_LOADING, {
-      variables: { text: " ", limit: this.limit, start: currentPage },
-    });
-    setMovies(
-      data.map((movie: Movie) => (
-        <MovieItem
-          key={movie._id}
-          _id={movie._id}
-          title={movie.title}
-          seqNr={movie.seqNr}
-          releaseYear={movie.releaseYear}
-          rating={movie.rating}
-        />
-      ))
-    );
-  };
-  render = () => {
-    //if (loading) return 'Loading...';
-
-    return (
+function FeedList(data: any) {
+  return (
+    <View>
       <FlatList
         style={{ flex: 1 }}
-        extraData={this.state}
-        onEndReached={this.fetchResult}
-        onEndReachedThreshold={0.7}
-        data={movies} //movie content
-        renderItem={(movies) => {}}
-        //keyExtractor={item => item.id.toString()}
+        data={data}
+        onEndReached={() => {
+          // The fetchMore method is used to load new data and add it
+          // to the original query we used to populate the list
+          data.fetchMore({
+            variables: { offset: data.feed.length + 1 },
+            updateQuery: (
+              previousResult: { feed: string | any[] },
+              { fetchMoreResult }: any
+            ) => {
+              // Don't do anything if there weren't any new items
+              if (!fetchMoreResult || fetchMoreResult.feed.length === 0) {
+                return previousResult;
+              }
+              return {
+                // Concatenate the new feed results after the old ones
+                feed: previousResult.feed.concat(fetchMoreResult.feed),
+              };
+            },
+          });
+        }}
+        onEndReachedThreshold={0.5}
+        keyExtractor={(item, index) => "key" + index}
+        renderItem={(item) => <MovieItemTmp movie={item.item} />}
       />
-    );
-  };
+    </View>
+  );
 }
+
+export default FeedList;
