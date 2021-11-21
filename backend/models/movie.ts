@@ -1,18 +1,24 @@
-import mongoose from 'mongoose';
+/**
+ * Model for movie
+ */
+import mongoose from "mongoose";
 
-export const MovieSchema = new mongoose.Schema({
+export const MovieSchema = new mongoose.Schema(
+  {
     title: {
-        type: String
+      type: String,
     },
     seqNr: {
-        type: Number
+      type: Number,
     },
     releaseYear: {
-        type: Number
+      type: Number,
     },
     rating: {
-        type: Number
-    }
-}, {collection: 'Movie'});
+      type: Number,
+    },
+  },
+  { collection: "Movie" }
+);
 
-export const Movie = mongoose.model('movie', MovieSchema);
+export const Movie = mongoose.model("movie", MovieSchema);

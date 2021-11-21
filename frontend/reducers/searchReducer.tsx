@@ -1,3 +1,7 @@
+/**
+ * Exports all reducers
+ * (searchReducer is not a completely appropriate name as it contains all the reducers)
+ */
 import {
   SEARCH_MOVIE,
   FETCH_MOVIES,
@@ -5,9 +9,8 @@ import {
   FETCH_MORE,
 } from "../actions/types";
 
-// searchReducer is not a completely appropriate name as it contains all the reducers
+//----- Interfaces to type the variables -----
 
-// Interfaces to type the variables
 export interface movieState {
   text: string;
   movies: {
@@ -26,6 +29,8 @@ export interface movieState {
   } | null;
   sort: string | null;
 }
+
+//--------- Interfaces for Actions ----------
 
 export interface ActionSearch {
   type: "SEARCH_MOVIE";
@@ -48,7 +53,7 @@ export interface ActionMore {
 
 export type Action = ActionSearch | ActionFetch | ActionSort | ActionMore;
 
-// An initialState for when starting app
+// An initialState for when starting app. We sort chronologically by default.
 const initialState: movieState = {
   text: "",
   movies: [],
@@ -56,6 +61,11 @@ const initialState: movieState = {
   sort: "chronological",
 };
 
+/**
+ * Main reducer function
+ * @param state initial state
+ * @param action action to execute
+ */
 export default function foo(state = initialState, action: Action) {
   switch (action.type) {
     case SEARCH_MOVIE:

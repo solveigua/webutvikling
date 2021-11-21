@@ -1,3 +1,7 @@
+/**
+ * Server connection to backend
+ * Utilizes mongoose and ApolloServer
+ */
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import mongoose from "mongoose";

@@ -1,14 +1,18 @@
+/**
+ * Contains all actions for functionality related to database
+ * (Slightly misguiding name as it contains all, not just SearchActions)
+ */
 import { ApolloClient } from "@apollo/client";
 import { Dispatch } from "react";
-import { GET_ALL_MOVIES, LAZY_LOADING } from "../util/queries";
+import { LAZY_LOADING } from "../util/queries";
 import { SEARCH_MOVIE, FETCH_MOVIES, SORT_MOVIES, FETCH_MORE } from "./types";
 import { dispatchType } from "./types";
-import { Movie } from "../types";
 import { InMemoryCache } from "@apollo/client";
 
-// searchActions er litt misvisende navn siden den inneholder alle actions
-
-// En funksjon for å dispatche en SEARCH_MOVIE action med text som payload
+/**
+ * Function for dispatching a SEARCH_MOVIE action with text as payload
+ * @param text String of what is seached for
+ */
 export const searchMovie = (text: string) => (
   dispatch: Dispatch<dispatchType>
 ) => {
@@ -18,7 +22,10 @@ export const searchMovie = (text: string) => (
   });
 };
 
-// En funksjon for å dispatche en SORT_MOVIES action med sort som payload
+/**
+ *  Function for dispatching a SORT_MOVIES action with sort as payload
+ * @param sort Specifies what we are sorting on. Either 'chronological' or 'year'
+ */
 export const sortMovies = (sort: string) => (
   dispatch: Dispatch<dispatchType>
 ) => {
@@ -27,8 +34,17 @@ export const sortMovies = (sort: string) => (
     payload: sort,
   });
 };
-// Oppdatert funksjon for å dispatche en LAZY_LOADING-action med de filtrerte filmene som payload
-// Henter data fra databasen, søker etter innhold i tittel
+
+/**
+ * Function for dispatching a LAZY_LOADING-action with the filtered movies as payload
+ * Fetches data from db with Lazy Loading technique for pagination
+ * Sorting and searching is done in backend.
+ * @param text string, what we are searching for
+ * @param start the start (offset) for pagination
+ * @param limit number of max movies to fetch from offset
+ * @param sorting type of sorting we are doing
+ * @param cleanMovies boolean to specify if movieslist should be cleaned
+ */
 export const fetchMoviesLazy = (
   text: string,
   start: number,

@@ -1,6 +1,12 @@
+/**
+ * Exports all queries
+ * Connects frontend to backend
+ * (some queries are not used in this project)
+ */
 import gql from "graphql-tag";
 
-//Queries:
+//----------- Queries: --------------
+
 const GET_ALL_MOVIES = gql`
   query {
     getAllMovies {
@@ -48,7 +54,9 @@ const GET_CHARACTER = gql`
 
 const LAZY_LOADING = gql`
   query($text: String, $limit: Int, $start: Int, $sorting: String) {
-    lazyLoading(input: { text: $text, limit: $limit, start: $start, sorting: $sorting }) {
+    lazyLoading(
+      input: { text: $text, limit: $limit, start: $start, sorting: $sorting }
+    ) {
       title
       rating
       seqNr
@@ -58,7 +66,7 @@ const LAZY_LOADING = gql`
   }
 `;
 
-//Mutation:
+//-------------- Mutation:--------------
 const SET_RATING = gql`
   mutation($id: ID!, $rating: Int!) {
     setRating(input: { movieId: $id, rating: $rating }) {
