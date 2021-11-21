@@ -42,6 +42,7 @@ Du bruker kommandoene
     
 i terminal for å starte. Da vil du i nettleser få opp Metro Bundler.
 
+![](./readmeContent/metroBundler.png)
 
 Her trykker du på “Run on iOS simulator” (markert i rød), eller så kan du bare taste “i” i terminalen du starter applikasjonen i. For å kjøre det her kreves det at du har en iOS simulator, som du får gjennom Xcode på mac. 
 
