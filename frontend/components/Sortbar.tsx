@@ -5,6 +5,7 @@ import { searchMovie, sortMovies } from "../actions/searchActions";
 
 export default function Sortbar() {
   const [search, setSearch] = useState("");
+  const [isPressed, setIsPressed] = useState("chronological");
 
   const dispatch = useDispatch();
 
@@ -17,15 +18,12 @@ export default function Sortbar() {
 
   const releaseYearPress = () => {
     dispatch(sortMovies("year"));
-    Alert.alert("Release Year", "Sorting movies based on release year");
+    setIsPressed("year");
   };
 
   const chronologicalPress = () => {
     dispatch(sortMovies("chronological"));
-    Alert.alert(
-      "Chronological Order",
-      "Sorting movies based on chronological order"
-    );
+    setIsPressed("chronological");
   };
 
   //Brukes ikke til noe spess, bare logges
@@ -47,16 +45,32 @@ export default function Sortbar() {
     <View style={styles.sortbar}>
       <Text style={styles.paragraphTextBold}>Sort movies based on: </Text>
       <View style={styles.sortButtonsView}>
-        <Button
-          color="#fff"
-          title="Release Year"
-          onPress={releaseYearPress}
-        ></Button>
-        <Button
-          color="#fff"
-          title="Chronological Order"
-          onPress={chronologicalPress}
-        ></Button>
+        <View
+          style={
+            isPressed === "year"
+              ? styles.sortButtonsPressed
+              : styles.sortButtonsNotPressed
+          }
+        >
+          <Button
+            color="#fff"
+            title="Release Year"
+            onPress={releaseYearPress}
+          ></Button>
+        </View>
+        <View
+          style={
+            isPressed === "chronological"
+              ? styles.sortButtonsPressed
+              : styles.sortButtonsNotPressed
+          }
+        >
+          <Button
+            color="#fff"
+            title="Chronological Order"
+            onPress={chronologicalPress}
+          ></Button>
+        </View>
       </View>
       <Text style={styles.paragraphTextBold}> Search for a movie: </Text>
       <View style={styles.searchView}>
@@ -64,8 +78,8 @@ export default function Sortbar() {
           style={styles.input}
           onChangeText={updateSearch}
           value={search}
-          placeholder="Search for a Marvel Movie"
-          placeholderTextColor="#fff"
+          placeholder="Search for a MCU Movie"
+          placeholderTextColor="rgba(255, 255, 255, 0.5)"
           onSubmitEditing={submitPress}
         />
         <Button
@@ -80,7 +94,7 @@ export default function Sortbar() {
 
 const styles = StyleSheet.create({
   sortbar: {
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: "rgba(0, 0, 0, 0.7)",
     textAlign: "center",
     width: "90%",
     position: "relative",
@@ -98,7 +112,7 @@ const styles = StyleSheet.create({
   paragraphTextBold: {
     fontWeight: "bold",
     color: "#fff",
-    fontSize: 12,
+    fontSize: 17,
     textAlign: "center",
     paddingBottom: 10,
     paddingTop: 10,
@@ -118,10 +132,16 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   sortButtonsView: {
-    backgroundColor: "transparent",
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
+  },
+  sortButtonsPressed: {
+    backgroundColor: "rgba(237,29,36, 0.6)",
+    borderRadius: 20,
+  },
+  sortButtonsNotPressed: {
+    backgroundColor: "transparent",
   },
   buttonsView: {
     backgroundColor: "transparent",

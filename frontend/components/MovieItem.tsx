@@ -34,11 +34,9 @@ const MovieItem: React.FC<{
   const handleChange = async (newRating: number | null) => {
     if (typeof newRating === "number") {
       setRating(newRating);
-      console.log(props);
-      try{
+      try {
         await rateMovie({ variables: { id: props._id, rating: newRating } });
-      }
-      catch (e){
+      } catch (e) {
         console.log(e);
         throw e;
       }
