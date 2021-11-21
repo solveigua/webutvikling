@@ -1,3 +1,6 @@
+/**
+ * GraphQL schema and typeDefs
+ */
 import { gql } from "apollo-server-express";
 
 export interface movie {

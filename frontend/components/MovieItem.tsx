@@ -1,3 +1,8 @@
+/**
+ * MovieItem defines a single instance of a movie
+ * Exports a functional component with props corresponding to movie items in db
+ * Handles rating mutation
+ */
 import { useMutation } from "@apollo/client";
 import React, { useState } from "react";
 import {
@@ -7,7 +12,6 @@ import {
   Text,
   Pressable,
   View,
-  SafeAreaView,
   TouchableWithoutFeedback,
   ScrollView,
   Image,
@@ -24,13 +28,17 @@ const MovieItem: React.FC<{
   releaseYear: number;
   rating: number;
 }> = (props) => {
-  //---- statehandling and change --//
+  //---- Statehandling and change --//
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [rating, setRating] = useState<number>(props.rating);
 
   const [rateMovie] = useMutation(SET_RATING); //To set a new rating when new rating is clicked
 
-  //For setting a new rating
+  /**
+   * For setting a new rating
+   * @param newRating a number containing the rating we want to give.
+   * rateMovie fires the mutation SET_RATING, which sets the new rating for the correct item in db.
+   */
   const handleChange = async (newRating: number | null) => {
     if (typeof newRating === "number") {
       setRating(newRating);
@@ -44,6 +52,7 @@ const MovieItem: React.FC<{
   };
 
   //---------Rating bar-----------//
+  // Images fetched from internet
   // Filled Star
   const starImageFilled =
     "https://raw.githubusercontent.com/AboutReact/sampleresource/master/star_filled.png";
@@ -51,6 +60,7 @@ const MovieItem: React.FC<{
   const starImageCorner =
     "https://raw.githubusercontent.com/AboutReact/sampleresource/master/star_corner.png";
 
+  // max rating is 5 stars
   const maxRating = [1, 2, 3, 4, 5];
 
   const CustomRatingBar = () => {

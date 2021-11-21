@@ -1,3 +1,7 @@
+/**
+ * Exports header component
+ * Provides background image and title for the app
+ */
 import React from "react";
 import { Text, View, Image, StyleSheet } from "react-native";
 
