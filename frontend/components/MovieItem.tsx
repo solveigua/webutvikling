@@ -130,7 +130,13 @@ const MovieItem: React.FC<{
                     </Text>
                   </View>
                   <Pressable
-                    style={styles.buttonClose}
+                    style={({ pressed }) => [
+                      {
+                        backgroundColor: pressed ? "white" : "#ED1D24",
+                        color: pressed ? "black" : "white",
+                      },
+                      styles.buttonClose,
+                    ]}
                     onPress={() => setModalVisible(!modalVisible)}
                   >
                     <Text style={styles.textStyle}>Close</Text>
@@ -182,7 +188,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
     elevation: 2,
-    backgroundColor: "#ED1D24",
   },
   textStyle: {
     color: "white",
