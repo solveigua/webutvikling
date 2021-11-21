@@ -1,6 +1,6 @@
 
 //importing from marvel_pictures and making list to map pictures to movie by seqNr 
-//the list is ordered by seqNr, starting at nr 1. 
+//the list is ordered by seqNr, starting at nr 1, so index 1 in the list is seqNr 1
 
 export const coverMovies = [
     0,
@@ -20,13 +20,13 @@ export const coverMovies = [
     require('../assets/marvel_pictures/antman.jpg'),
     require('../assets/marvel_pictures/cap3t.jpg'),
     require('../assets/marvel_pictures/blackwidow.jpg'),
-    require('../assets/marvel_pictures/spiderman_FarFromHome.jpg'),
+    require('../assets/marvel_pictures/spiderman.jpg'),
     require('../assets/marvel_pictures/doc.png'),
     require('../assets/marvel_pictures/blackpanther.jpg'),
     require('../assets/marvel_pictures/thor3.png'),
     require('../assets/marvel_pictures/avengers3.png'),
     require('../assets/marvel_pictures/antman2.jpg'),
-    require('../assets/marvel_pictures/avengers4.jpg'),
-    require('../assets/marvel_pictures/spiderman.jpg'),
+    require('../assets/marvel_pictures/avengers4.jpg'), 
+    require('../assets/marvel_pictures/spiderman_FarFromHome.jpg'),
 ]
 
