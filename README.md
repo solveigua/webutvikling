@@ -1,86 +1,63 @@
-# Prosjekt 3 - Marveldatabase
+# Prosjekt 4 - React Native klient
+I prosjekt 4 har vi valgt følgende oppgave:
 
-Prosjektet vårt kan finnes på begge disse linkene:
-* http://it2810-19.idi.ntnu.no/
-* http://it2810-19.idi.ntnu.no/prosjekt3/
+"Lag en React Native client hvor dere gjenbruker backend og det som kan gjenbrukes av kode og logikk for klienten (bruk expo-cli)"
 
-**NB!** Dersom du får en feil når du åpner prosjektet der det står "Error, something went wrong" er du nødt til å inspisere siden --> application --> localStorage --> clear storage. Da skal det fungere. 
+## Begrunnelse for backend
 
-## Prosjektet
-Vi så på prosjektet som en mulighet til å lære oss nye ting. Medlemmer som tidligere har jobbet mest på frontend jobbet nå med backend, og omvendt. Vi har opplevd dette som veldig lærerikt og utfordrende, da vi følte vi fikk komme litt utenfor komfortsonen og at vi har fått større forståelse for ulike aspekter ved webutvikling.
+Vårt prosjekt viser alle Marvel Cinematic Universe filmer, og gir bruker mulighet til å søke, sortere og gi ratings til filmene. Ettersom det kun finnes et visst antall MCU-filmer hadde vi ikke behov for å hente store mengder data fra API. Vi tolket oppgaven som at data skulle hentes fra en database opprettet og vedlikeholdt av medlemmene på gruppen, og valgte derfor å fokusere på læringsutbytte i databasemanipulasjon og la inn data manuelt via mongoDB shell ettersom vi uansett ikke trengte mer enn de 22 filmene Marvel har gitt ut. Vi føler dette viser minst like god kunnskap i behandling av data som å hente ferdig json-stringer fra et eksternt API og legge inn med addMany-funksjonen til mongoDB, selv om vi ser at mange andre grupper har løst det på den måten. Da det ikke står eksplisitt i oppgaven at data skal hentes eksternt mener vi dette var en helt egnet løsning. Vi forstår selvfølgelig at denne løsningen ikke er bærekraftig i forhold til skalering, men tolket ikke skalering av database som et vurderingskrav i denne oppgaven. 
 
-Prosjektet vårt inneholder en database med alle Marvel Cinematic Universe-filmene og de 21 viktigste karakterene som er med. For øyeblikket er det filmene alene som er hovedfokuset. Poenget er at en bruker da kan finne en Marvel-film den vil se, kunne se de i rekkefølgen de ønsker (kronologisk rekkefølge eller etter utgivelsesdato), søke etter filmer og gi dem en rating på 1-5 stjerner etter de har sett den. Rett og slett en nyttig nettside for Marvelfans som vil se en film!:)
+## Begrunnelse for valg av oppgave 
 
-## Backend
+Da vi sto ovenfor prosjekt 4, vurderte vi flere alternativer:    
+    a) Opprette ny database der data hentes fra eksternt API    
+    b) Fikse småfeil i prosjekt 3 og utvide testing    
+    c) Lage appen vår på nytt i React Native    
 
-**Database**
+Konsekvensene av valg **a)** ville vært at vi hadde måtte endre total struktur og logikk i prosjektet. Hele poenget med vår nettside er informasjon om Marvel-filmer, og da det ikke er flere Marvelfilmer å hente, siden det ikke finnes flere filmer i Marvel Cinematic Universe enn de vi allerede har, ville ikke henting av fra API utvidet databasen, og dette ville ikke ha vistes fysisk på nettsiden som en forbedring fra prosjekt 3. Dersom vi skulle vist frem mer data, hadde vi måttet hente flere filmer (f.eks. alle fra imdb), noe som ikke gir mening for omfanget av vår nettside, som kun omhandler filmene i Marvel-universet. Filmene våre sorteres også på sekvensnummer, som beskriver rekkefølgen kronologisk i dette universet. Sekvensnummer vil da ikke gi mening utenfor omfanget av disse filmene, og sammenhengen de har til hverandre. Derav måtte vi ha endret på hele strukturen og funksjonaliteten til nettsiden vår, noe vi ikke helt ser nytten av, da det ikke ville gitt oss noe ny læringsutbytte i forhold til forrige prosjekt.
 
-Databasen er opprettet med MongoDB, og vi benytter oss av apollo, express, og mongoose for konfigurasjon. 
-Da vi helst ville lære oss databasemanipulasjon på egen hånd så valgte vi å opprette en database der vi har lagt inn data og drifter den selv heller enn å hente inn fra et eksisterende API. Dataen er fordelt på to collections: Movie og Character. Ettersom MongoDB ikke er en relasjonsdatabase valgte vi å gjøre relasjonen mellom de to collectionsene ved å legge et Array-felt med Movies i hver Character.
+Valg **b)** ville bl.a. inneholde tillegg av pagination, mulighet til å se mer info om dataen vi henter, samt utvidelse av tester både i cypress og jest. Vi valgte derimot å gå for valg **c)**, da vi føler vi kan implementere disse forbedringene (med unntak av tester) likevel, samtidig som vi får læringsutbytte og viser kunnskaper i React Native. Vi mener denne oppgaven gir mest profitt knyttet til både læring og forbedring i forhold til tidsbruk. Det gir oss i tillegg muligheten til å rette opp i de manglene vi hadde fra prosjekt3, blant annet med å oppdatere litt i databasen og front-end.
 
-Da vi hadde medlemmer på grupper som var syke under store deler av arbeidstiden for prosjektet, valgte vi å gå bort ifra å vise karakter-collectionen i prosjektet. Det var likevel en fin øving i å opprette collections i mongoDB med “relasjoner”. Vi ser på dette som en mulig forbedring til prosjekt 4.
+For å utvide backend litt i prosjekt 4 har vi valgt å legge til pagination i graphQL-resolversene, noe vi ikke hadde i prosjekt 3. Grunnen til dette var at vi ikke så på det som nødvendig da vi hadde relativt lite data å laste av gangen, men ettersom pagination er et læringsmål, og det gir mer mening i mobile view der få objekter kan vises av gangen, ser vi på det som en naturlig utvidelse i prosjekt 4. Dette er implementert ved FlatList, som render objektene “lazily”. Med en såpass liten database kunne vi fint brukt ScrollView, men for potensiell utvidelse blir dette den bedre løsningen. Mer om forskjellen mellom FlatList og ScrollView kan man se [her](https://reactnative.dev/docs/scrollview). 
 
-Det er definert Schema i typeDefs.ts, og resolvers i resolvers.ts. Modellene for Character og Movie ligger i models-mappen. Server er koblet sammen med API i server.ts, via express, apollo-server og mongoose.
+Vi har også valgt å legge inn muligheten for å vise mer informasjon om hvert objekt, noe som er en intuitiv utvidelse når vi nå bruker React Native og utvikler for mobil. 
 
-Vi startet med å deploye databasen på ubuntu med en gang, og backend skal kjøre kontinuerlig på hosten nå. Vi brukte nohup til dette.
+## Forskjeller og likheter fra React til React Native
 
-**Fetching**
+I prosjekt 4 har vi gjenbrukt mye av koden fra prosjekt 3, særlig når det kommer til funksjonalitet som ikke direkte påvirker GUI. React Native er et mobil-rammeverk som bruker Reactjs for å bygge apper og nettsteder. Det er et såkalt “cross-platform” rammeverk, som vil si at React Native gjør det mulig å utvikle mobil-applikasjoner som kan kjøre på ulike plattformer, som for eksempel Android og iOS. I dette prosjektet har vi kun fått testet applikasjonen på iOS pga. problemer med Android emulator. Koden har likevel lagt til rette for at applikasjonen skal kunne kjøre fint på både Android og iOS. Det er også mulig å skrive plattform-spesifikk kode som tilrettelegger for at applikasjonen skal kjøre på en spesifikk plattform, og dette er noe som sees på som en av fordelene med React Native. 
 
-Fetching av data skjer ved queries skrevet i util-mappen. Siden vi bruker graphQL ligger denne i frontend (“marvel”)-mappen. Vi har queries som går på å hente alle filmer i en liste, én film fra ID (og tilsvarende for karakterene, selv om vi ikke endte opp med å bruke de i fremvisning). For at bruker skal kunne endre data har vi også lagt til en mutation “setRating”, som endrer vurderingen av filmen. Bruker som gir filmen en vurdering vil da endre verdien i databasen. Selv om ikke dette er en løsning som ville blitt brukt i en reell applikasjon, ville vi gjøre dette i vår løsning likevel for å vise kunnskaper i mutations.
+Den største forskjellen fra prosjekt 3 til prosjekt 4 er hvordan brukergrensesnittet er lagt opp for å håndtere funksjonaliteten. Noen av hovedforskjellene vi har opplevd ved å gå over til en React Native klient er:
+* Vanlig Reactjs bruker HTML i GUI, mens Native bruker kun JSX. Det vil si at de mye brukte HTML-tagene, som div, ikke er mulig å bruke i React Native. Erstatningen for feks div blir forskjellige typer View, som vi har brukt mye under prosjekt 4. Andre erstatninger vi har tatt i bruk er Text, Button, Alert, TextInput og FlatList, som alle importeres fra React Native sitt bibliotek.
 
-Resterende manipulasjon av data for sortering og søk er implementert med logikk i frontend.
-
-## Testing
-
-**Ende-til-ende**
-
-End-to-end testing er gjort med cypress, og kan kjøres fra rotnivå med kommandoen npm run cypress:run (for å kjøre testene i konsoll) og/eller npm run cypress:open for å kjøre Cypress Test Runner gjennom Electron window.
-Vi har skrevet tester for Header-komponentet, hovedsiden med Movies, søke-feltet og søkelogikken, samt at siden loader med riktig deployment. Cypress hjelper med all funksjonalitet relatert til ende-til-ende-testing, og lar oss skrive tester som tester hele applikasjonens “workflow” ved å gjenskape reelle brukerscenarioer. Slik kan systemet valideres for integrasjon og dataintegritet.
-Det finnes videoer for testene i mappen cypress/movies.
-
-**Enhetstesting**
-
-Enhetstesting er utført med jest og Enzyme, samt reacts testbibliotek. Vi har veldig mange komponenter, og har ikke implementert tester for alle. Vi har brukt snapshot-tester for å sjekke at komponenter vil rendere riktig, samt mock-funksjoner for å sikre riktig funksjonalitet i komponentene. Testene finnes under marvel/components/__tests__, i en egen branch kalt "test". Dette er fordi vi hadde feil i moduler som vi ikke rakk å fikse før fristen, som vi ikke ville skulle ødelegge for master-branchen. Mest sannsynlig er det to importerte versjoner av React som forårsaker feilen.
-
-Til neste prosjekt ønsker vi å fokusere enda mer på tester, og ha muligheten til å teste mer. 
-
-## Frontend 
-
-**Redux**
-
-Vi har valgt å bruke redux for å håndtere global state. State som håndteres i applikasjonen er filmene som hentes fra databasen og hvilken sortering som er valgt.
-
-I koden har vi store.ts som bruker redux-thunk, applyMiddleware og en rootreducer (som ligger i reducers/index.tsx) for å opprette en store: movies. Rootreducer er opprettet for å legge til rette for flere reducers, selv om vi foreløpig kun har én reducer. I movies lagres en state som har verdier for text, movies, movie og sort. Disse brukes for å kunne lagre tilstanden til henholdsvis teksten i søkefeltet, filmene som skal vises på siden, én enkelt film og hvilken type sortering som er valgt. Til denne innleveringen har vi ingen funksjonalitet som bruker state.movies.movie, men dette er noe vi kan legge til funksjonalitet for senere. 
-
-Vi har én reducer, searchReducer, der vi håndterer forskjellige typer states. Det vil si at vi har tre forskjellige “case” som endrer på tilstanden til text, movies og sort i forhold til hvilken action som utføres. Her brukes også localStorage for å sette den initielle tilstanden til sort. 
-
-Vi har én action-fil, searchActions.ts, som inneholder tre forskjellige actions: searchMovie, fetchMovies og sortMovies. searchMovie tar inn en text, som er teksten som søkes på i søkefeltet, og dispatcher en SEARCH_MOVIE case med text som payload. fetchMovies tar også inn text og bruker en apolloklient for å hente dataen vår (alle filmene) fra databasen med en query. Deretter lagres dataen i en array som mappes gjennom og filtreres i henhold til søkeordet, altså text. Den filtrerte listen er det som blir payloaden når FETCH_MOVIES dispatches. sortMovies tar inn en string “sort” og dispatcher SORT_MOVIES med payloaden sort. 
-
-Tilstanden vi lagrer bruker vi i MoviesContainer, MovieSummary og SearchBar, og der er hensikten å henholdsvis fremvise de riktige filmene i riktig rekkefølge, ha en knapp som viser frem alle filmene, og å kunne søke på en tittel for å vise frem ønskede filmer. 
-
-**Layout**
-
-Hver film dukker opp i en egen boks, med tilhørende bilde, tittel, utgivelsesår og muligheten for å gi en rating. Her har vi brukt Card komponentet fra Ant Design, og lagt til egen styling.
-
-Bildene er lagt inn manuelt, da vi lagde databasen selv, og koblet hver film gjennom seqNr, som er unikt for hvert objekt. Det ga oss en mer helhetlig og mer visuell utforming på siden, som samtidig passet til dataen vår. 
-
-Rating ved bruk av stjerner er lagt til for å være intuitiv, og viser hvor mange stjerner du gir før du trykker. Logikken er laget selv, men stjernene er hentet fra React-Icons. Det er og mulighet for å se skriftlig hva ratingen er, og vi valgte at det skulle stå en rating i starten som brukeren kan endre på.
-
-Om brukeren vil se spesifikke filmer kan det bli gjort via søkefelt. Brukeren kan og sortere alle filmene, eller filmene de har søkt på, via radiobuttons. Det er da mulighet til å se filmene etter utgivelsesår, eller i kronologisk rekkefølge etter filmuniversets tidslinje. 
-
-**Universell utforming**
-
-For å opprettholde god universell utforming har vi tatt utgangspunkt i denne nettsiden: https://webaccess.berkeley.edu/resources/tips/web-accessibility
-
-For å opprettholde god universell utforming, har vi blant annet valgt å ha intuitiv bruk av headings, høy kontrast i fargebruken for lettere lesing, store knapper samt mulighet for zoom på siden ved bruk av mus. Vi har også accessibility på keyboardet i søkefunksjonen, da men kan søke ved å trykke enter-tasten, ikke bare ved å trykke på knappen. 
-
-**Lighthouse**
-
-Vi kjørte også en lighthouse-report for å sjekke universell utforming.
-Som man ser fra rapporten dersom man kjører det selv oppnår vi god en score på accessibility.
-
-**Kilder**
-
-Vi har sett mye på tutorials fra YouTube og Udemy, både for utforming av CSS, bruk av Redux og for funksjonalitet som søk og ratingbar. 
+* CSS er ikke mulig å bruke for å style komponentene i React Native, der man heller tar i bruk stylesheets.
 
 
+## Kjøring og testing av prosjektet
+
+Som nevnt er den oppdaterte backend deployet, så for å kjøre prosjektet må du igjen være på NTNU sin VPN.
+
+Du bruker kommandoene    
+    **cd frontend    
+    npm start**
+    
+i terminal for å starte. Da vil du i nettleser få opp Metro Bundler.
+
+
+Her trykker du på “Run on iOS simulator” (markert i rød), eller så kan du bare taste “i” i terminalen du starter applikasjonen i. For å kjøre det her kreves det at du har en iOS simulator, som du får gjennom Xcode på mac. 
+
+Ingen på gruppen hadde mulighet til å teste i Android device/emulator, så vi har kun brukt iOS for å testing av applikasjonen. Forhåpentligvis skal det fungere fint her og, men om du merker noen problemer ber vi at du prøver å få testet i iOS. 
+
+Prøver du å åpne i web browser vil det meste av funksjonalitet være der, men den er ikke optimal og ser merkelig ut at styling og oppsett fordi det ikke er ment for å være i web. 
+
+Dersom mobilen din er på NTNU sin VPN kan du scanne QR-koden (markert i blått). Dette krever at du har lastet ned Expo Go fra App Store. 
+
+På iOS simulatoren skal det se slik ut når appen er startet:
+
+
+
+Vi har lagt ved en demo på hvordan prosjektet ser ut og kjører i iOS Simulator. Det er litt hakkete på scrolling fordi skjermen er litt liten og du må holde inne museknappen for kunne scrolle. Brukeropplevelsen er bedre om du bruker Expo Go på mobil. 
+
+Når du trykker på “Chronological Order” sorter den filmene i kronologisk rekkefølge, mens “Release Year” sorterer på utgivelsesår. Dersom to er utgitt i samme år, blir de sortert på tittel. Når applikasjonen starter er default satt til “Chronological Order”. 
+Hvis du søker på noe vil alle filmer som har søkeordet i tittelen komme frem. Disse er ennå sortert etter valget ditt. Trykker du på Reset movies vises alle filmene igjen. Du vil ennå være på samme sted i listen som du har scrollet deg til (vil altså ikke havne på toppen, som man ville gjort hvis hele siden ble refreshet). 
+Vi henter 3 filmer av gangen fra databasen, og ved scrolling vil tre nye (eller 1-2, når man nærmer seg slutten av søket) lastes inn av gangen og legges til fremvisningen. 
+Det er kun bildene som dukker opp, men trykker man på et bilde vil det poppe opp et modalvindu, som har coverbildet, tittel, utgivelsesår og en rating. Her kan du endre ratingen til filmen, ved å trykke på stjernene. Du kommer deg ut av modalvinduet ved å trykke på “Close” eller bakgrunnen utenfor. 
