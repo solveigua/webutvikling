@@ -54,7 +54,7 @@ Dersom mobilen din er på NTNU sin VPN kan du scanne QR-koden (markert i blått)
 
 På iOS simulatoren skal det se slik ut når appen er startet:
 
-<img src="./readmeContent/startPicIOS.png"  width="200" height="300">
+<img src="./readmeContent/startPicIOS.png"  width="200" height="433">
 
 Vi har lagt ved en demo på hvordan prosjektet ser ut og kjører i iOS Simulator. Det er litt hakkete på scrolling fordi skjermen er litt liten og du må holde inne museknappen for kunne scrolle. Brukeropplevelsen er bedre om du bruker Expo Go på mobil. 
 
