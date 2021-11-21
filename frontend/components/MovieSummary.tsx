@@ -34,7 +34,6 @@ const MovieSummary = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("useEffect changed");
     dispatch(fetchMoviesLazy(searchText, 0, 3, sorting, true));
   }, [searchText, sorting]);
 

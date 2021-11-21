@@ -31,11 +31,9 @@ export const resolvers = {
     },
     getAllMovies: async () => {
       const movies = await Movie.find();
-      console.log(movies);
       return movies;
     },
     getMovie: async (_: Object, args: { input: movieId }) => {
-      console.log(args.input.id);
       try {
         const movie = await Movie.findById(args.input.id);
         return movie;
@@ -46,7 +44,6 @@ export const resolvers = {
 
     lazyLoading: async (_: Object, args: { input: loadingInput }) => {
       try {
-        console.log(args.input.sorting);
         let searchCondition = {};
 
         const sortCondition: SearchCondition =
@@ -64,6 +61,8 @@ export const resolvers = {
           .skip(args.input.start)
           .limit(args.input.limit);
 
+        console.log(movies);
+
         return movies;
       } catch (err) {
         throw err;
@@ -73,10 +72,8 @@ export const resolvers = {
 
   Mutation: {
     setRating: async (_: Object, args: { input: ratingInput }) => {
-      console.log(args.input);
       try {
         const movie = await Movie.findById(args.input.movieId);
-        console.log(JSON.parse(JSON.stringify(movie)));
         if (movie) {
           await Movie.updateOne(movie, { $set: { rating: args.input.rating } });
           return movie;
