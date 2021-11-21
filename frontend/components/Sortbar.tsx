@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Button, Alert, TextInput } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+import { StyleSheet, Text, View, Button, TextInput } from "react-native";
+import { useDispatch } from "react-redux";
 import { searchMovie, sortMovies } from "../actions/searchActions";
 
 export default function Sortbar() {
@@ -9,35 +9,22 @@ export default function Sortbar() {
 
   const dispatch = useDispatch();
 
-  const updateSearch = (search: string) => {
+  const updateSearch: (search: string) => void = (search: string) => {
     setSearch(search);
     dispatch(searchMovie(search));
   };
 
-  const allMovies: any = useSelector<any, any>((state) => state.movies.movies);
-
-  const releaseYearPress = () => {
+  const releaseYearPress: () => void = () => {
     dispatch(sortMovies("year"));
     setIsPressed("year");
   };
 
-  const chronologicalPress = () => {
+  const chronologicalPress: () => void = () => {
     dispatch(sortMovies("chronological"));
     setIsPressed("chronological");
   };
 
-  //Brukes ikke til noe spess, bare logges
-  const searchText: string = useSelector<any, any>(
-    (state) => state.movies.text
-  );
-
-  const submitPress = () => {
-    // Trenger vi noe her?
-    //setSearch(" ");
-  };
-
-  const allMoviesPress = () => {
-    // Gjør noe med allMovies her
+  const allMoviesPress: () => void = () => {
     updateSearch("");
   };
 
@@ -80,7 +67,6 @@ export default function Sortbar() {
           value={search}
           placeholder="Search for a MCU Movie"
           placeholderTextColor="rgba(255, 255, 255, 0.5)"
-          onSubmitEditing={submitPress}
         />
         <Button
           color="#fff"
@@ -103,31 +89,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: 250,
   },
-  paragraphText: {
-    color: "#fff",
-    fontSize: 12,
-    textAlign: "center",
-    paddingBottom: 10,
-  },
   paragraphTextBold: {
     fontWeight: "bold",
     color: "#fff",
     fontSize: 17,
     textAlign: "center",
-    paddingBottom: 10,
-    paddingTop: 10,
-  },
-  paragraphTextBoldPad: {
-    fontWeight: "bold",
-    color: "#fff",
-    fontSize: 12,
-    textAlign: "center",
-    paddingBottom: 10,
-    paddingTop: "2%",
-  },
-  titleText: {
-    color: "#fff",
-    fontSize: 20,
     paddingBottom: 10,
     paddingTop: 10,
   },
@@ -142,12 +108,6 @@ const styles = StyleSheet.create({
   },
   sortButtonsNotPressed: {
     backgroundColor: "transparent",
-  },
-  buttonsView: {
-    backgroundColor: "transparent",
-    paddingBottom: "5%",
-    flex: 1,
-    flexDirection: "row",
   },
   input: {
     borderColor: "gray",
