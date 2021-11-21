@@ -33,10 +33,15 @@ const MovieItem: React.FC<{
   //For setting a new rating
   const handleChange = async (newRating: number | null) => {
     if (typeof newRating === "number") {
-      localStorage.setItem(JSON.stringify(props._id), newRating.toString());
       setRating(newRating);
       console.log(props);
-      await rateMovie({ variables: { id: props._id, rating: newRating } });
+      try{
+        await rateMovie({ variables: { id: props._id, rating: newRating } });
+      }
+      catch (e){
+        console.log(e);
+        throw e;
+      }
     }
   };
 
