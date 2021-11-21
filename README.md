@@ -58,6 +58,8 @@ På iOS simulatoren skal det se slik ut når appen er startet:
 
 Vi har lagt ved en demo på hvordan prosjektet ser ut og kjører i iOS Simulator. Det er litt hakkete på scrolling fordi skjermen er litt liten og du må holde inne museknappen for kunne scrolle. Brukeropplevelsen er bedre om du bruker Expo Go på mobil. 
 
+![](./readmeContent/prosjekt4.mp4)
+
 Når du trykker på “Chronological Order” sorter den filmene i kronologisk rekkefølge, mens “Release Year” sorterer på utgivelsesår. Dersom to er utgitt i samme år, blir de sortert på tittel. Når applikasjonen starter er default satt til “Chronological Order”. 
 Hvis du søker på noe vil alle filmer som har søkeordet i tittelen komme frem. Disse er ennå sortert etter valget ditt. Trykker du på Reset movies vises alle filmene igjen. Du vil ennå være på samme sted i listen som du har scrollet deg til (vil altså ikke havne på toppen, som man ville gjort hvis hele siden ble refreshet). 
 Vi henter 3 filmer av gangen fra databasen, og ved scrolling vil tre nye (eller 1-2, når man nærmer seg slutten av søket) lastes inn av gangen og legges til fremvisningen. 
