@@ -22,7 +22,7 @@ type loadingInput = {
   sorting: string;
 };
 
-type SearchCondition = { seqNr: 1 } | { releaseYear: 1 };
+type SearchCondition = { seqNr: 1; title: 1 } | { releaseYear: 1; title: 1 };
 
 export const resolvers = {
   Query: {
@@ -47,7 +47,9 @@ export const resolvers = {
         let searchCondition = {};
 
         const sortCondition: SearchCondition =
-          args.input.sorting === "year" ? { releaseYear: 1 } : { seqNr: 1 };
+          args.input.sorting === "year"
+            ? { releaseYear: 1, title: 1 }
+            : { seqNr: 1, title: 1 };
 
         //Hvis det ikke er en tom string:
         if (args.input.text !== "") {
