@@ -2,7 +2,7 @@
  * Exports a MovieSummay component, containing all MovieItems in a scrollable list
  * Handles fetching of data from backend
  */
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { FlatList } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMoviesLazy } from "../actions/searchActions";
@@ -13,7 +13,6 @@ import MovieItem from "./MovieItem";
  * @param movie the movie we are mapping from renderItem.
  */
 const MovieItemTmp = ({ movie }: any) => {
-  console.log(movie);
   return (
     <MovieItem
       key={movie._id}
@@ -28,17 +27,11 @@ const MovieItemTmp = ({ movie }: any) => {
 
 // State for current movies fetched for redux
 const MovieSummary = () => {
-  const movieState: [] = useSelector<any, any>(
-    (state: any) => state.movies.movies
-  );
+  const movieState: [] = useSelector((state: any) => state.movies.movies);
 
-  const searchText: string = useSelector<any, any>(
-    (state: any) => state.movies.text
-  );
+  const searchText: string = useSelector((state: any) => state.movies.text);
 
-  const sorting: string = useSelector<any, any>(
-    (state: any) => state.movies.sort
-  );
+  const sorting: string = useSelector((state: any) => state.movies.sort);
 
   const dispatch = useDispatch();
 
@@ -53,9 +46,9 @@ const MovieSummary = () => {
    * Updates the offset for pagination with the movieStates length, so 3 new
    * movies are fetched. Stops when all movies are fetched.
    */
-  const renderNew = (event: any) => {
+  const renderNew = () => {
     movieState.length > 23
-      ? console.log("done")
+      ? console.log("done fetching")
       : dispatch(fetchMoviesLazy(searchText, movieState.length, 3, sorting));
   };
 
@@ -67,7 +60,7 @@ const MovieSummary = () => {
       data={movieState}
       onEndReached={renderNew}
       onEndReachedThreshold={0.5}
-      keyExtractor={(item, index) => "key" + index}
+      keyExtractor={(_, index) => "key" + index}
       renderItem={(item) => <MovieItemTmp movie={item.item} />}
     />
   );
